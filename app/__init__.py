@@ -69,6 +69,22 @@ EXPERIENCE = [
 ]
 
 
+# Education, also rendered with a Jinja {% for %} loop.
+EDUCATION = [
+    {
+        "school": "University of California, Santa Barbara",
+        "degree": "B.S. in Computer Science",
+        "dates": "Expected June 2028",
+        "honors": "Dean's Honors · GPA 3.91/4.0",
+        "coursework": [
+            "Data Structures & Algorithms",
+            "Computer Architecture",
+            "Object-Oriented Programming",
+        ],
+    },
+]
+
+
 @app.route("/")
 def index():
     return render_template("index.html", title="Home")
@@ -81,7 +97,7 @@ def experience():
 
 @app.route("/education")
 def education():
-    return render_template("education.html", title="Education")
+    return render_template("education.html", title="Education", education=EDUCATION)
 
 
 @app.route("/hobbies")
