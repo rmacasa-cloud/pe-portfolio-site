@@ -3,6 +3,19 @@
 {% block content %}
 <section class="page-section">
     <h2 class="section-title">Hobbies</h2>
-    <p class="placeholder">Coming soon.</p>
+    <div class="hobby-grid">
+        {% for hobby in hobbies %}
+        <article class="hobby-card{% if not hobby.image_path %} hobby-card--text{% endif %}">
+            {% if hobby.image_path %}
+            <img class="hobby-img" src="{{ url_for('static', filename=hobby.image_path) }}"
+                alt="{{ hobby.name }}" />
+            {% endif %}
+            <div class="hobby-body">
+                <h3 class="hobby-name">{{ hobby.name }}</h3>
+                <p class="hobby-desc">{{ hobby.description }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
 </section>
 {% endblock %}

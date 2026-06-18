@@ -100,9 +100,52 @@ def education():
     return render_template("education.html", title="Education", education=EDUCATION)
 
 
+# Hobbies. Each entry names a candidate image basename; the actual image is
+# resolved against whatever files exist in static/img (any common extension),
+# so a missing file simply yields a clean text-only card instead of a broken
+# image.
+IMG_DIR = os.path.join(app.static_folder, "img")
+_IMG_EXTENSIONS = (".jfif", ".jpg", ".jpeg", ".png", ".webp", ".gif")
+
+HOBBIES = [
+    {
+        "name": "Basketball",
+        "image": "basketball",
+        "description": "Pickup games and watching the league whenever I get the chance.",
+    },
+    {
+        "name": "Foodie",
+        "image": "food",
+        "description": "Always hunting for the next great meal and new cuisines to try.",
+    },
+    {
+        "name": "Video Games",
+        "image": "videogame",
+        "description": "Unwinding with competitive and story-driven games alike.",
+    },
+    {
+        "name": "Movies & Anime",
+        "image": "anime",
+        "description": "Long-running anime series and a good movie night.",
+    },
+]
+
+
+def _resolve_image(basename):
+    """Return 'img/<file>' if a matching image exists in static/img, else None."""
+    for ext in _IMG_EXTENSIONS:
+        if os.path.exists(os.path.join(IMG_DIR, basename + ext)):
+            return "img/" + basename + ext
+    return None
+
+
+for _hobby in HOBBIES:
+    _hobby["image_path"] = _resolve_image(_hobby["image"])
+
+
 @app.route("/hobbies")
 def hobbies():
-    return render_template("hobbies.html", title="Hobbies")
+    return render_template("hobbies.html", title="Hobbies", hobbies=HOBBIES)
 
 
 @app.route("/map")
