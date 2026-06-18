@@ -23,6 +23,52 @@ def inject_pages():
     return {"pages": PAGES}
 
 
+# Work experience, rendered with a Jinja {% for %} loop (no hardcoded repetition).
+EXPERIENCE = [
+    {
+        "role": "Undergraduate Research Assistant",
+        "org": "UCSB Systems and Networking Lab",
+        "dates": "Dec 2025 – Present",
+        "points": [
+            "Migrated 8 metric endpoints from 5s HTTP polling to Gorilla WebSocket "
+            "streaming via event-driven deltas.",
+            "Refactored the NetVibe speedtest pipeline to backend Prometheus scraping "
+            "across 3 microservices and a 10-node cluster.",
+            "Implemented JWT middleware in Go securing 20+ API routes with "
+            "user-context forwarding.",
+            "Built a Go ICMP library tracking RTT across 30+ targets, batching latency "
+            "into InfluxDB and SQLite.",
+        ],
+    },
+    {
+        "role": "Full-Stack Developer",
+        "org": "ACM Industry @ UCSB – IV Outfitters",
+        "dates": "Jan 2026 – Present",
+        "points": [
+            "Building an automation system processing 25+ weekly orders with Next.js, "
+            "FastAPI, and PostgreSQL.",
+            "Integrated Printavo and vendor APIs to automate PO generation and "
+            "shipment tracking.",
+            "Implemented Celery + Redis task queues running 6-hour polling cycles to "
+            "sync tracking data.",
+        ],
+    },
+    {
+        "role": "Software Engineering Intern",
+        "org": "Willamette Valley Rheumatology Clinic",
+        "dates": "Jun 2025 – Sep 2025",
+        "points": [
+            "Developed Python automation tools handling patient intake and insurance "
+            "across ~50 daily visits.",
+            "Built data-validation pipelines enforcing consistency across intake, "
+            "insurance, and documentation.",
+            "Migrated manual record management into centralized digital workflows, "
+            "cutting redundant data entry.",
+        ],
+    },
+]
+
+
 @app.route("/")
 def index():
     return render_template("index.html", title="Home")
@@ -30,7 +76,7 @@ def index():
 
 @app.route("/experience")
 def experience():
-    return render_template("experience.html", title="Experience")
+    return render_template("experience.html", title="Experience", experience=EXPERIENCE)
 
 
 @app.route("/education")
