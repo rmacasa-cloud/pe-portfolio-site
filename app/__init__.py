@@ -148,6 +148,28 @@ def hobbies():
     return render_template("hobbies.html", title="Hobbies", hobbies=HOBBIES)
 
 
+# Places visited, plotted as Leaflet markers. Coordinates are hardcoded so the
+# map needs no geocoding API and the page carries zero secrets.
+PLACES = [
+    {"name": "Belize", "lat": 17.1899, "lng": -88.4976},
+    {"name": "Italy", "lat": 41.8719, "lng": 12.5674},
+    {"name": "Germany", "lat": 51.1657, "lng": 10.4515},
+    {"name": "Philippines", "lat": 12.8797, "lng": 121.7740},
+    {"name": "Switzerland", "lat": 46.8182, "lng": 8.2275},
+    {"name": "Ireland", "lat": 53.4129, "lng": -8.2439},
+    {"name": "Japan", "lat": 36.2048, "lng": 138.2529},
+    {"name": "Mexico", "lat": 23.6345, "lng": -102.5528},
+    {"name": "Puerto Rico", "lat": 18.2208, "lng": -66.5901},
+    {"name": "Cuba", "lat": 21.5218, "lng": -77.7812},
+    {"name": "France", "lat": 46.2276, "lng": 2.2137},
+    {"name": "Portugal", "lat": 39.3999, "lng": -8.2245},
+    {"name": "Spain", "lat": 40.4637, "lng": -3.7492},
+    {"name": "Belgium", "lat": 50.5039, "lng": 4.4699},
+    {"name": "Canada", "lat": 56.1304, "lng": -106.3468},
+    {"name": "New York City", "lat": 40.7128, "lng": -74.0060},
+]
+
+
 @app.route("/map")
 def travel():
-    return render_template("map.html", title="Travel")
+    return render_template("map.html", title="Travel", places=PLACES)
