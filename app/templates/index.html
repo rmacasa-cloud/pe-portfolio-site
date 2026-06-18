@@ -2,7 +2,16 @@
 
 {% block content %}
 <section class="hero">
+    <img class="headshot" src="{{ url_for('static', filename='img/headshot.jpg') }}"
+        alt="Ramon &quot;Red&quot; Macasa headshot" />
     <h1>Ramon "Red" Macasa</h1>
     <p class="subtitle">CS @ UC Santa Barbara · MLH Fellow</p>
+</section>
+
+<section class="page-section about">
+    <h2 class="section-title">About Me</h2>
+    <p>Originally from Oregon, I'm now a second-year Computer Science major at UC Santa Barbara.
+        My current interests span machine learning, full-stack development, and quantitative analysis.
+        I'm excited to develop my professional experience. I also trade options!</p>
 </section>
 {% endblock %}
