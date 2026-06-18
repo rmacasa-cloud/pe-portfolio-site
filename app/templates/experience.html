@@ -3,6 +3,21 @@
 {% block content %}
 <section class="page-section">
     <h2 class="section-title">Experience</h2>
-    <p class="placeholder">Coming soon.</p>
+    <div class="timeline">
+        {% for job in experience %}
+        <article class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ job.role }}</h3>
+                <span class="card-dates">{{ job.dates }}</span>
+            </div>
+            <p class="card-org">{{ job.org }}</p>
+            <ul class="card-points">
+                {% for point in job.points %}
+                <li>{{ point }}</li>
+                {% endfor %}
+            </ul>
+        </article>
+        {% endfor %}
+    </div>
 </section>
 {% endblock %}
