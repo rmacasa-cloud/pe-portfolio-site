@@ -3,6 +3,21 @@
 {% block content %}
 <section class="page-section">
     <h2 class="section-title">Education</h2>
-    <p class="placeholder">Coming soon.</p>
+    {% for school in education %}
+    <article class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ school.school }}</h3>
+            <span class="card-dates">{{ school.dates }}</span>
+        </div>
+        <p class="card-org">{{ school.degree }}</p>
+        <p class="card-meta">{{ school.honors }}</p>
+        <p class="card-meta"><strong>Relevant Coursework</strong></p>
+        <ul class="card-points">
+            {% for course in school.coursework %}
+            <li>{{ course }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+    {% endfor %}
 </section>
 {% endblock %}
