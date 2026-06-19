@@ -236,6 +236,15 @@ body {
     border-top: 5px solid var(--brand);
 }
 
+/* ---------- Travel map ---------- */
+#travel-map {
+    height: 560px;
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 16px;
+    box-shadow: 0 2px 8px rgba(29, 83, 159, 0.12);
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
     background-color: var(--brand-dark);
