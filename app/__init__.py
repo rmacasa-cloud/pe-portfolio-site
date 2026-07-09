@@ -1,10 +1,36 @@
 import os
+import datetime
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
+from peewee import MySQLDatabase, Model, CharField, TextField, DateTimeField
+from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
 app = Flask(__name__)
+
+db = MySQLDatabase(
+    os.getenv("MYSQL_DATABASE"),
+    user=os.getenv("MYSQL_USER"),
+    password=os.getenv("MYSQL_PASSWORD"),
+    host=os.getenv("MYSQL_HOST"),
+    port=3306,
+)
+
+
+class TimelinePost(Model):
+    name = CharField()
+    email = CharField()
+    content = TextField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = db
+
+
+db.connect()
+db.create_tables([TimelinePost])
+
 
 # Pages that drive the dynamic navigation bar. The context_processor below
 # injects this into every template, so the nav is built from one source.
@@ -173,3 +199,29 @@ PLACES = [
 @app.route("/map")
 def travel():
     return render_template("map.html", title="Travel", places=PLACES)
+
+
+@app.route("/api/timeline_post", methods=["POST"])
+def create_timeline_post():
+    data = request.get_json()
+    post = TimelinePost.create(
+        name=data["name"],
+        email=data["email"],
+        content=data["content"],
+    )
+    return jsonify(model_to_dict(post)), 201
+
+
+@app.route("/api/timeline_post", methods=["GET"])
+def get_timeline_posts():
+    posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+    return jsonify([model_to_dict(p) for p in posts])
+
+
+@app.route("/api/timeline_post/<int:post_id>", methods=["DELETE"])
+def delete_timeline_post(post_id):
+    post = TimelinePost.get_or_none(TimelinePost.id == post_id)
+    if post is None:
+        return jsonify({"error": "not found"}), 404
+    post.delete_instance()
+    return jsonify({"deleted": post_id}), 200
