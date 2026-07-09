@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Timeline</h1>
+
+<form id="timeline-form">
+    <input type="text" id="name" placeholder="Your name" required>
+    <input type="email" id="email" placeholder="Your email" required>
+    <textarea id="content" placeholder="What's on your mind?" required></textarea>
+    <button type="submit">Post</button>
+</form>
+
+<div id="timeline-posts"></div>
+
+<script>
+const form = document.getElementById("timeline-form");
+const postsContainer = document.getElementById("timeline-posts");
+
+function gravatarUrl(email) {
+    const trimmed = email.trim().toLowerCase();
+    return `https://www.gravatar.com/avatar/${trimmed}?d=identicon`;
+}
+
+function renderPosts(posts) {
+    postsContainer.innerHTML = "";
+    posts.forEach(post => {
+        const postEl = document.createElement("div");
+        postEl.className = "timeline-post";
+        postEl.innerHTML = `
+            <img src="${gravatarUrl(post.email)}" width="40" height="40">
+            <strong>${post.name}</strong>
+            <p>${post.content}</p>
+            <small>${post.created_at}</small>
+        `;
+        postsContainer.appendChild(postEl);
+    });
+}
+
+function loadPosts() {
+    fetch("/api/timeline_post")
+        .then(res => res.json())
+        .then(renderPosts);
+}
+
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        content: document.getElementById("content").value,
+    };
+
+    fetch("/api/timeline_post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    })
+        .then(res => res.json())
+        .then(() => {
+            form.reset();
+            loadPosts();
+        });
+});
+
+loadPosts();
+</script>
+{% endblock %}

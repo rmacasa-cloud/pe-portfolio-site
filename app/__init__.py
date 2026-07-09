@@ -125,6 +125,10 @@ def experience():
 def education():
     return render_template("education.html", title="Education", education=EDUCATION)
 
+@app.route("/timeline")
+def timeline():
+    return render_template("timeline.html", title="Timeline")
+
 
 # Hobbies. Each entry names a candidate image basename; the actual image is
 # resolved against whatever files exist in static/img (any common extension),
