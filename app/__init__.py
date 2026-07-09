@@ -1,5 +1,7 @@
 import os
 import datetime
+import pymysql
+pymysql.install_as_MySQLdb()
 
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
