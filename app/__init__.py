@@ -5,19 +5,23 @@ pymysql.install_as_MySQLdb()
 
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
-from peewee import MySQLDatabase, Model, CharField, TextField, DateTimeField
+from peewee import MySQLDatabase, SqliteDatabase, Model, CharField, TextField, DateTimeField
 from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
 app = Flask(__name__)
 
-db = MySQLDatabase(
-    os.getenv("MYSQL_DATABASE"),
-    user=os.getenv("MYSQL_USER"),
-    password=os.getenv("MYSQL_PASSWORD"),
-    host=os.getenv("MYSQL_HOST"),
-    port=3306,
-)
+if os.getenv("TESTING") == "true":
+    print("Running in test mode")
+    db = SqliteDatabase('file:memory?mode=memory&cache=shared', uri=True)
+else:
+    db = MySQLDatabase(
+        os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=3306,
+    )
 
 
 class TimelinePost(Model):
@@ -210,6 +214,14 @@ def travel():
 @app.route("/api/timeline_post", methods=["POST"])
 def create_timeline_post():
     data = request.get_json()
+
+    if "name" not in data or not data["name"]:
+        return "Invalid name", 400
+    if "email" not in data or not data["email"] or "@" not in data["email"]:
+        return "Invalid email", 400
+    if "content" not in data or not data["content"]:
+        return "Invalid content", 400
+    
     post = TimelinePost.create(
         name=data["name"],
         email=data["email"],
