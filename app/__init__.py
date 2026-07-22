@@ -57,6 +57,35 @@ def inject_pages():
 
 # Work experience, rendered with a Jinja {% for %} loop (no hardcoded repetition).
 EXPERIENCE = [
+
+    {
+        "role": "Software Engineer Intern",
+        "org": "Associated Environmental Systems",
+        "dates": "Jun 2026 – Sep 2026",
+        "points": [
+            "Architected a full-stack coordinator dashboard (Next.js, TypeScript, Prisma, "
+            "PostgreSQL) as sole engineer, replacing a legacy spreadsheet workflow used by "
+            "150+ technicians.",
+            "Unified 3 coordinator workflows — calibration, certificates, and coordination "
+            "— into one REST API.",
+            "Cut daily coordination turnaround ~60% by shipping the MVP end to end and "
+            "deploying it to Vercel.",
+        ],
+    },
+    {
+        "role": "Undergraduate Researcher",
+        "org": "Oregon State University – TRUE-AI Lab",
+        "dates": "Jun 2026 – Present",
+        "points": [
+            "Building a generation-and-verification pipeline that prompts frontier LLMs to "
+            "synthesize real-time OS schedulers, auto-checked against formal schedulability "
+            "tests, targeting a workshop paper.",
+            "Benchmarked generated schedulers across 1,000 task sets, matching "
+            "Rate-Monotonic/EDF baselines on 93% while isolating 27 constrained-deadline "
+            "failures.",
+        ],
+    },
+
     {
         "role": "Undergraduate Research Assistant",
         "org": "UCSB Systems and Networking Lab",
@@ -83,19 +112,6 @@ EXPERIENCE = [
             "shipment tracking.",
             "Implemented Celery + Redis task queues running 6-hour polling cycles to "
             "sync tracking data.",
-        ],
-    },
-    {
-        "role": "Software Engineering Intern",
-        "org": "Willamette Valley Rheumatology Clinic",
-        "dates": "Jun 2025 – Sep 2025",
-        "points": [
-            "Developed Python automation tools handling patient intake and insurance "
-            "across ~50 daily visits.",
-            "Built data-validation pipelines enforcing consistency across intake, "
-            "insurance, and documentation.",
-            "Migrated manual record management into centralized digital workflows, "
-            "cutting redundant data entry.",
         ],
     },
 ]
