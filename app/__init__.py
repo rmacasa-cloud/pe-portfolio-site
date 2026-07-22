@@ -46,6 +46,7 @@ PAGES = [
     {"name": "Education", "endpoint": "education"},
     {"name": "Hobbies", "endpoint": "hobbies"},
     {"name": "Travel", "endpoint": "travel"},
+    {"name": "Timeline", "endpoint": "timeline"},
 ]
 
 
