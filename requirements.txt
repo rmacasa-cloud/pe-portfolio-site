@@ -1,2 +1,4 @@
 Flask==3.0.3
 python-dotenv==1.2.1
+peewee==4.2.4
+PyMySQL==1.2.0
