@@ -260,3 +260,19 @@ def delete_timeline_post(post_id):
         return jsonify({"error": "not found"}), 404
     post.delete_instance()
     return jsonify({"deleted": post_id}), 200
+@app.route("/health")
+def health():
+    checks = {}
+    status_code = 200
+
+    try:
+        db.connect(reuse_if_open=True)
+        post_count = TimelinePost.select().count()
+        checks["database"] = "ok"
+        checks["timeline_posts"] = post_count
+    except Exception as e:
+        checks["database"] = "error: " + str(e)
+        status_code = 503
+
+    checks["app"] = "ok"
+    return jsonify(checks), status_code
